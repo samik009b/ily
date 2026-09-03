@@ -29,7 +29,6 @@
     min-height: 100vh;
   }
 
-  /* ─── STAR BACKGROUND ─── */
   #stars {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     overflow: hidden;
@@ -45,7 +44,6 @@
     to   { opacity: 1;   transform: scale(1.2); }
   }
 
-  /* ─── FLYING HEARTS ─── */
   .flying-heart {
     position: fixed;
     font-size: 1.5rem;
@@ -61,7 +59,6 @@
     100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
   }
 
-  /* ─── SECTIONS ─── */
   section {
     position: relative; z-index: 1;
     min-height: 100vh;
@@ -71,7 +68,6 @@
     text-align: center;
   }
 
-  /* ─── SECTION 1: HERO ─── */
   #hero {
     gap: 1.5rem;
   }
@@ -124,54 +120,6 @@
     50%      { transform: translateY(10px); }
   }
 
-  /* ─── SECTION 2: REASONS ─── */
-  #reasons {
-    gap: 2rem;
-    background: radial-gradient(ellipse at center, #2d0060 0%, #1a0030 70%);
-  }
-  #reasons h2 {
-    font-size: clamp(1.8rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: var(--pink);
-    text-shadow: 0 0 20px var(--pink);
-  }
-  .reasons-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.2rem;
-    max-width: 900px;
-    width: 100%;
-  }
-  .reason-card {
-    background: rgba(255,255,255,0.07);
-    border: 2px solid rgba(255,107,174,0.35);
-    border-radius: 20px;
-    padding: 1.4rem 1rem;
-    backdrop-filter: blur(6px);
-    animation: pop-in 0.6s cubic-bezier(.34,1.56,.64,1) both;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .reason-card:hover {
-    transform: scale(1.08) rotate(-2deg);
-    box-shadow: 0 0 25px var(--pink);
-  }
-  .reason-card:nth-child(even):hover { transform: scale(1.08) rotate(2deg); }
-  @keyframes pop-in {
-    from { opacity: 0; transform: scale(0.4) rotate(-20deg); }
-    to   { opacity: 1; transform: scale(1) rotate(0deg); }
-  }
-  .reason-card .icon { font-size: 2.5rem; }
-  .reason-card p { margin-top: 0.5rem; font-size: 0.95rem; color: #ddd; }
-
-  /* stagger */
-  .reason-card:nth-child(1) { animation-delay: 0.05s; }
-  .reason-card:nth-child(2) { animation-delay: 0.15s; }
-  .reason-card:nth-child(3) { animation-delay: 0.25s; }
-  .reason-card:nth-child(4) { animation-delay: 0.35s; }
-  .reason-card:nth-child(5) { animation-delay: 0.45s; }
-  .reason-card:nth-child(6) { animation-delay: 0.55s; }
-
-  /* ─── SECTION 3: THE QUESTION ─── */
   #question {
     gap: 2.5rem;
     background: radial-gradient(ellipse at center, #003055 0%, #1a0030 70%);
@@ -235,7 +183,6 @@
     transition: transform 0.1s;
   }
 
-  /* ─── SECTION 4: CELEBRATION ─── */
   #celebration {
     display: none;
     gap: 2rem;
@@ -281,7 +228,6 @@
     to   { transform: rotate(10deg) scale(1.15); }
   }
 
-  /* ─── FLOATING CONFETTI ─── */
   .confetti-piece {
     position: fixed;
     width: 10px; height: 14px;
@@ -296,7 +242,6 @@
     100% { transform: translateY(110vh) rotate(720deg) skewX(20deg); opacity: 0; }
   }
 
-  /* ─── ORBIT EMOJIS ─── */
   .orbit-wrap {
     position: relative;
     width: 200px; height: 200px;
@@ -315,7 +260,6 @@
     to   { transform: rotate(calc(var(--start) + 360deg)) translateX(80px) rotate(calc(-1 * (var(--start) + 360deg))); }
   }
 
-  /* ─── LETTER ANIMATION ─── */
   .animated-letters span {
     display: inline-block;
     animation: letter-bounce 0.6s ease-in-out infinite;
@@ -343,10 +287,8 @@
 </head>
 <body>
 
-<!-- Star field -->
 <div id="stars"></div>
 
-<!-- Section 1: Hero -->
 <section id="hero">
   <div class="wiggle-emoji">🥺</div>
   <h1 class="hero-title animated-letters">
@@ -372,7 +314,6 @@
   </div>
 </section>
 
-<!-- Section 4: Celebration -->
 <section id="celebration">
   <div class="confetti-burst">🎊</div>
   <p class="celebration-text">YAAAAY!!! 🥳</p>
@@ -384,7 +325,6 @@
 </section>
 
 <script>
-  // ── Stars ──
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 140; i++) {
     const s = document.createElement('div');
@@ -400,7 +340,6 @@
     starsEl.appendChild(s);
   }
 
-  // ── Flying hearts ──
   const heartsArr = ['💖','💗','💓','💕','💞','💝','❤️','🧡','💛','💚','💙','💜'];
   for (let i = 0; i < 18; i++) {
     const h = document.createElement('div');
@@ -414,7 +353,6 @@
     document.body.appendChild(h);
   }
 
-  // ── No button runs away ──
   let noCount = 0;
   function runAway(btn) {
     noCount++;
@@ -430,12 +368,11 @@
     if (noCount === 6) btn.textContent = 'Still no 🏃';
     if (noCount === 9) btn.textContent = "Can't catch me!";
     if (noCount >= 12) {
-      btn.style.display = 'none'; // button gives up
+      btn.style.display = 'none'; 
     }
   }
   function noClick() { runAway(document.getElementById('no-btn')); }
 
-  // ── Celebrate ──
   function celebrate() {
     document.getElementById('question').style.display = 'none';
     const cel = document.getElementById('celebration');

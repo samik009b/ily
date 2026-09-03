@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Go Out With Me??</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;900&family=Caveat:wght@400;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #ff6bae;
+    --yellow: #ffe600;
+    --blue: #00c2ff;
+    --purple: #b847ff;
+    --green: #00e676;
+    --bg: #1a0030;
+    --white: #fff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Baloo 2', cursive;
+    overflow-x: hidden;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ─── STAR BACKGROUND ─── */
+  #stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* ─── FLYING HEARTS ─── */
+  .flying-heart {
+    position: fixed;
+    font-size: 1.5rem;
+    animation: fly-up var(--d) linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes fly-up {
+    0%   { transform: translateY(110vh) rotate(0deg);  opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  /* ─── SECTION 1: HERO ─── */
+  #hero {
+    gap: 1.5rem;
+  }
+
+  .wiggle-emoji {
+    font-size: 5rem;
+    display: inline-block;
+    animation: wiggle 0.5s ease-in-out infinite alternate;
+  }
+  @keyframes wiggle {
+    from { transform: rotate(-15deg) scale(1); }
+    to   { transform: rotate(15deg) scale(1.2); }
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 1.05;
+    animation: rainbow-text 3s linear infinite;
+    background: linear-gradient(90deg, var(--pink), var(--yellow), var(--blue), var(--purple), var(--green), var(--pink));
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  @keyframes rainbow-text {
+    from { background-position: 0%; }
+    to   { background-position: 300%; }
+  }
+
+  .hero-sub {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    color: var(--yellow);
+    animation: bounce-text 1.2s ease-in-out infinite;
+  }
+  @keyframes bounce-text {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+
+  .scroll-hint {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+    animation: bob 1s ease-in-out infinite;
+    cursor: pointer;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(10px); }
+  }
+
+  /* ─── SECTION 2: REASONS ─── */
+  #reasons {
+    gap: 2rem;
+    background: radial-gradient(ellipse at center, #2d0060 0%, #1a0030 70%);
+  }
+  #reasons h2 {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--pink);
+    text-shadow: 0 0 20px var(--pink);
+  }
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    max-width: 900px;
+    width: 100%;
+  }
+  .reason-card {
+    background: rgba(255,255,255,0.07);
+    border: 2px solid rgba(255,107,174,0.35);
+    border-radius: 20px;
+    padding: 1.4rem 1rem;
+    backdrop-filter: blur(6px);
+    animation: pop-in 0.6s cubic-bezier(.34,1.56,.64,1) both;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .reason-card:hover {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 0 25px var(--pink);
+  }
+  .reason-card:nth-child(even):hover { transform: scale(1.08) rotate(2deg); }
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .reason-card .icon { font-size: 2.5rem; }
+  .reason-card p { margin-top: 0.5rem; font-size: 0.95rem; color: #ddd; }
+
+  /* stagger */
+  .reason-card:nth-child(1) { animation-delay: 0.05s; }
+  .reason-card:nth-child(2) { animation-delay: 0.15s; }
+  .reason-card:nth-child(3) { animation-delay: 0.25s; }
+  .reason-card:nth-child(4) { animation-delay: 0.35s; }
+  .reason-card:nth-child(5) { animation-delay: 0.45s; }
+  .reason-card:nth-child(6) { animation-delay: 0.55s; }
+
+  /* ─── SECTION 3: THE QUESTION ─── */
+  #question {
+    gap: 2.5rem;
+    background: radial-gradient(ellipse at center, #003055 0%, #1a0030 70%);
+  }
+  .question-emoji-row {
+    font-size: 3.5rem;
+    letter-spacing: 0.3rem;
+    animation: shake-row 2s ease-in-out infinite;
+  }
+  @keyframes shake-row {
+    0%,100% { transform: translateX(0); }
+    20%     { transform: translateX(-8px) rotate(-2deg); }
+    40%     { transform: translateX(8px) rotate(2deg); }
+    60%     { transform: translateX(-5px); }
+    80%     { transform: translateX(5px); }
+  }
+  .big-question {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--white);
+    text-shadow: 0 0 30px var(--blue), 0 0 60px var(--purple);
+    animation: pulse-glow 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes pulse-glow {
+    from { text-shadow: 0 0 20px var(--blue), 0 0 40px var(--purple); }
+    to   { text-shadow: 0 0 40px var(--pink), 0 0 80px var(--yellow); }
+  }
+
+  .btn-row {
+    display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;
+    align-items: center;
+  }
+  #yes-btn {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem; font-weight: 900;
+    padding: 0.9rem 3rem;
+    border: none; border-radius: 50px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--green);
+    animation: yes-pulse 1s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+  #yes-btn:hover { transform: scale(1.15) rotate(-3deg); }
+  @keyframes yes-pulse {
+    0%, 100% { box-shadow: 0 0 15px var(--green); }
+    50%      { box-shadow: 0 0 40px var(--green), 0 0 80px var(--blue); }
+  }
+
+  #no-btn {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1rem; font-weight: 700;
+    padding: 0.6rem 1.8rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.1s;
+  }
+
+  /* ─── SECTION 4: CELEBRATION ─── */
+  #celebration {
+    display: none;
+    gap: 2rem;
+    background: radial-gradient(ellipse at center, #003000 0%, #1a0030 70%);
+  }
+  #celebration.active { display: flex; }
+
+  .confetti-burst {
+    font-size: 4rem;
+    animation: spin-burst 0.8s ease-out;
+  }
+  @keyframes spin-burst {
+    from { transform: scale(0) rotate(0deg); opacity: 0; }
+    to   { transform: scale(1) rotate(720deg); opacity: 1; }
+  }
+  .celebration-text {
+    font-size: clamp(2rem, 7vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--green), var(--yellow), var(--pink));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbow-text 2s linear infinite, jump 0.6s ease-in-out infinite alternate;
+  }
+  @keyframes jump {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-20px) scale(1.04); }
+  }
+  .celebration-sub {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 4vw, 2.2rem);
+    color: var(--yellow);
+    max-width: 600px;
+  }
+  .dancing-hearts {
+    font-size: 3rem;
+    letter-spacing: 0.5rem;
+    animation: dance 0.4s ease-in-out infinite alternate;
+  }
+  @keyframes dance {
+    from { transform: rotate(-10deg) scale(1); }
+    to   { transform: rotate(10deg) scale(1.15); }
+  }
+
+  /* ─── FLOATING CONFETTI ─── */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 14px;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    animation: confetti-fall var(--cd) linear var(--delay) infinite;
+  }
+  @keyframes confetti-fall {
+    0%   { transform: translateY(-10vh) rotate(0deg) skewX(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg) skewX(20deg); opacity: 0; }
+  }
+
+  /* ─── ORBIT EMOJIS ─── */
+  .orbit-wrap {
+    position: relative;
+    width: 200px; height: 200px;
+    margin: 0 auto;
+  }
+  .orbit-center { font-size: 5rem; line-height: 1; }
+  .orbit-emoji {
+    position: absolute;
+    font-size: 2rem;
+    top: 50%; left: 50%;
+    transform-origin: 0 0;
+    animation: orbit var(--od) linear infinite;
+  }
+  @keyframes orbit {
+    from { transform: rotate(var(--start)) translateX(80px) rotate(calc(-1 * var(--start))); }
+    to   { transform: rotate(calc(var(--start) + 360deg)) translateX(80px) rotate(calc(-1 * (var(--start) + 360deg))); }
+  }
+
+  /* ─── LETTER ANIMATION ─── */
+  .animated-letters span {
+    display: inline-block;
+    animation: letter-bounce 0.6s ease-in-out infinite;
+  }
+  .animated-letters span:nth-child(1)  { animation-delay: 0.0s; }
+  .animated-letters span:nth-child(2)  { animation-delay: 0.05s; }
+  .animated-letters span:nth-child(3)  { animation-delay: 0.1s; }
+  .animated-letters span:nth-child(4)  { animation-delay: 0.15s; }
+  .animated-letters span:nth-child(5)  { animation-delay: 0.2s; }
+  .animated-letters span:nth-child(6)  { animation-delay: 0.25s; }
+  .animated-letters span:nth-child(7)  { animation-delay: 0.3s; }
+  .animated-letters span:nth-child(8)  { animation-delay: 0.35s; }
+  .animated-letters span:nth-child(9)  { animation-delay: 0.4s; }
+  .animated-letters span:nth-child(10) { animation-delay: 0.45s; }
+  .animated-letters span:nth-child(11) { animation-delay: 0.5s; }
+  @keyframes letter-bounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-18px) rotate(8deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Star field -->
+<div id="stars"></div>
+
+<!-- Section 1: Hero -->
+<section id="hero">
+  <div class="wiggle-emoji">🥺</div>
+  <h1 class="hero-title animated-letters">
+    <span>P</span><span>s</span><span>s</span><span>s</span><span>t</span><span>…</span>
+    <span> </span><span>H</span><span>e</span><span>y</span><span>!</span>
+  </h1>
+  <p class="hero-sub">I have something very serious to ask you...</p>
+  <div class="orbit-wrap">
+    <div class="orbit-center">💘</div>
+    <span class="orbit-emoji" style="--od:3s;  --start:0deg;">🌟</span>
+    <span class="orbit-emoji" style="--od:4s;  --start:120deg;">🌸</span>
+    <span class="orbit-emoji" style="--od:5s;  --start:240deg;">✨</span>
+  </div>
+  <div class="scroll-hint" onclick="document.getElementById('reasons').scrollIntoView({behavior:'smooth'})">👇</div>
+</section>
+
+<section id="question">
+  <div class="question-emoji-row">💌 🌹 💝 🌹 💌</div>
+  <p class="big-question">So… Do you love me Oishu ?</p>
+  <div class="btn-row">
+    <button id="yes-btn" onclick="celebrate()">🎉 YES!! 🎉</button>
+    <button id="no-btn" onmouseover="runAway(this)" onclick="noClick()">No</button>
+  </div>
+</section>
+
+<!-- Section 4: Celebration -->
+<section id="celebration">
+  <div class="confetti-burst">🎊</div>
+  <p class="celebration-text">YAAAAY!!! 🥳</p>
+  <p class="celebration-sub">I KNEW it!! I love you too chotto baccha!!</p>
+  <div class="dancing-hearts">💖 💗 💓 💞 💕</div>
+  <p style="font-size:1.1rem; color:#ccc; max-width:500px; font-family:'Caveat',cursive; font-size:1.4rem; animation: bounce-text 1s ease-in-out infinite;">
+    Chotto patilebu ta 🫶
+  </p>
+</section>
+
+<script>
+  // ── Stars ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --d:${(Math.random()*3+1).toFixed(1)}s;
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── Flying hearts ──
+  const heartsArr = ['💖','💗','💓','💕','💞','💝','❤️','🧡','💛','💚','💙','💜'];
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('div');
+    h.className = 'flying-heart';
+    h.textContent = heartsArr[Math.floor(Math.random() * heartsArr.length)];
+    h.style.cssText = `
+      left:${Math.random()*100}%;
+      --d:${(Math.random()*6+5).toFixed(1)}s;
+      animation-delay:${(Math.random()*8).toFixed(1)}s;
+    `;
+    document.body.appendChild(h);
+  }
+
+  // ── No button runs away ──
+  let noCount = 0;
+  function runAway(btn) {
+    noCount++;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const bw = btn.offsetWidth, bh = btn.offsetHeight;
+    const x = Math.random() * (vw - bw);
+    const y = Math.random() * (vh - bh);
+    btn.style.position = 'fixed';
+    btn.style.left = x + 'px';
+    btn.style.top  = y + 'px';
+    btn.style.zIndex = 1000;
+    if (noCount === 3) btn.textContent = 'Nope 😏';
+    if (noCount === 6) btn.textContent = 'Still no 🏃';
+    if (noCount === 9) btn.textContent = "Can't catch me!";
+    if (noCount >= 12) {
+      btn.style.display = 'none'; // button gives up
+    }
+  }
+  function noClick() { runAway(document.getElementById('no-btn')); }
+
+  // ── Celebrate ──
+  function celebrate() {
+    document.getElementById('question').style.display = 'none';
+    const cel = document.getElementById('celebration');
+    cel.classList.add('active');
+    cel.scrollIntoView({ behavior: 'smooth' });
+    spawnConfetti();
+    spawnExtraHearts();
+  }
+
+  function spawnConfetti() {
+    const colors = ['#ff6bae','#ffe600','#00c2ff','#b847ff','#00e676','#ff4444','#ffffff'];
+    for (let i = 0; i < 120; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.cssText = `
+        left:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        --cd:${(Math.random()*3+2).toFixed(1)}s;
+        --delay:${(Math.random()*4).toFixed(1)}s;
+        transform: rotate(${Math.random()*360}deg);
+      `;
+      document.body.appendChild(c);
+    }
+  }
+
+  function spawnExtraHearts() {
+    for (let i = 0; i < 20; i++) {
+      const h = document.createElement('div');
+      h.className = 'flying-heart';
+      h.textContent = ['💖','💗','💓','🎉','🌟','✨','🥳'][Math.floor(Math.random()*7)];
+      h.style.cssText = `
+        left:${Math.random()*100}%;
+        font-size:${(Math.random()*2+1.5).toFixed(1)}rem;
+        --d:${(Math.random()*4+3).toFixed(1)}s;
+        animation-delay:${(Math.random()*2).toFixed(1)}s;
+      `;
+      document.body.appendChild(h);
+    }
+  }
+</script>
+</body>
+</html>
